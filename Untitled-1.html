@@ -17,7 +17,8 @@
             --warning: #f59e0b;
             --border: #e2e8f0;
             --radius: 12px;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 
+                      0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
 
         * {
@@ -62,6 +63,12 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 10px -1px rgb(0 0 0 / 0.15);
         }
 
         .kpi-title {
@@ -84,231 +91,62 @@
             gap: 2rem;
         }
 
-        @media (max-width: 1024px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card {
+        aside {
             background: var(--card-bg);
             padding: 1.5rem;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
-            height: fit-content;
         }
 
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1.25rem;
-            color: var(--text-main);
-        }
-
-        /* Formulários */
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-main);
-        }
-
-        input, select {
-            width: 100%;
-            padding: 0.625rem;
+        main {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 0.95rem;
-            color: var(--text-main);
-            outline: none;
-            transition: border-color 0.2s;
         }
-
-        input:focus, select:focus {
-            border-color: var(--primary);
-        }
-
-        /* Botões */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: var(--primary-hover); }
-        .btn-danger { background: var(--danger); color: white; padding: 0.4rem 0.8rem; font-size: 0.85rem;}
-        
-        /* Filtros e Busca */
-        .toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            max-width: 300px;
-        }
-
-        /* Tabela Responsiva */
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.95rem;
-        }
-
-        th, td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            background: #f8fafc;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        /* Badges de Status */
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .badge-pendente { background: #fef3c7; color: var(--warning); }
-        .badge-faturamento { background: #e0f2fe; color: var(--primary); }
-        .badge-entregue { background: #d1fae5; color: var(--success); }
     </style>
 </head>
 <body>
-
     <div class="container">
         <header>
-            <h1>📦 Módulo ERP | Gestão de Pedidos</h1>
+            <h1>ERP - Gestão Avançada de Pedidos</h1>
         </header>
 
-        <!-- Indicadores de Desempenho (KPIs) -->
-        <div class="dashboard-grid">
+        <!-- KPIs -->
+        <section class="dashboard-grid">
             <div class="kpi-card">
-                <div class="kpi-title">Total de Pedidos</div>
-                <div class="kpi-value" id="kpi-total-pedidos">0</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-title">Faturamento Total</div>
-                <div class="kpi-value" id="kpi-faturamento">R$ 0,00</div>
+                <div class="kpi-title">Pedidos Hoje</div>
+                <div class="kpi-value">128</div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-title">Pedidos Pendentes</div>
-                <div class="kpi-value" id="kpi-pendentes" style="color: var(--warning)">0</div>
+                <div class="kpi-value">42</div>
             </div>
-        </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Pedidos Concluídos</div>
+                <div class="kpi-value">86</div>
+            </div>
+        </section>
 
+        <!-- Layout Principal -->
         <div class="main-layout">
-            <!-- Formulário Lateral -->
-            <div class="card">
-                <div class="card-title">Emitir Novo Pedido</div>
-                <form id="formPedido">
-                    <div class="form-group">
-                        <label>Cliente</label>
-                        <input type="text" id="cliente" required placeholder="Nome ou Razão Social">
-                    </div>
-                    <div class="form-group">
-                        <label>Produto</label>
-                        <select id="produto" required>
-                            <option value="" disabled selected>Selecione um produto</option>
-                            <option value="Notebook Dell|4500">Notebook Dell - R$ 4.500,00</option>
-                            <option value="Monitor LG 29'|1200">Monitor LG 29' - R$ 1.200,00</option>
-                            <option value="Teclado Mecânico|350">Teclado Mecânico - R$ 350,00</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Quantidade</label>
-                        <input type="number" id="quantidade" min="1" value="1" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Forma de Pagamento</label>
-                        <select id="pagamento">
-                            <option>Pix</option>
-                            <option>Cartão de Crédito</option>
-                            <option>Boleto Bancário</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Status Inicial</label>
-                        <select id="status">
-                            <option value="Pendente">Pendente</option>
-                            <option value="Faturamento">Em Faturamento</option>
-                            <option value="Entregue">Entregue</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Gravar Pedido (Salvar)</button>
-                </form>
-            </div>
+            <aside>
+                <h2>Menu</h2>
+                <ul>
+                    <li>📦 Pedidos</li>
+                    <li>👥 Clientes</li>
+                    <li>📊 Relatórios</li>
+                    <li>⚙️ Configurações</li>
+                </ul>
+            </aside>
 
-            <!-- Tabela Principal e Filtros -->
-            <div class="card">
-                <div class="toolbar">
-                    <div class="card-title" style="margin:0;">Listagem de Vendas</div>
-                    <input type="text" id="busca" class="search-box" placeholder="🔎 Buscar por cliente..." oninput="filtrarTabela()">
-                </div>
-                
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Data</th>
-                                <th>Cliente</th>
-                                <th>Produto</th>
-                                <th>Qtd</th>
-                                <th>Total</th>
-                                <th>Pagamento</th>
-                                <th>Status</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabelaPedidos">
-                            <!-- Inserção via JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <main>
+                <h2>Visão Geral</h2>
+                <p>Bem-vindo ao painel de gestão avançada de pedidos. Aqui você pode acompanhar métricas, gerenciar clientes e visualizar relatórios em tempo real.</p>
+            </main>
         </div>
     </div>
-
-    <script>
-        let pedidos = [];
-        let contadorId = 1001; // IDs no padrão ERP
-
-        const form = document.getElementById("formPedido");
-
-        form.addEventListener("submit", function(e) {
-            e.preventDefault();
-            adicionarPedido();
-        });
-
-        function adicionarPedido() {
-            const cliente = document.getElementById("cliente").value;
+</body>
+</html>
